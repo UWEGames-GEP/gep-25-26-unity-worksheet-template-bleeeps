@@ -5,6 +5,8 @@ public class Inventory : MonoBehaviour
 {
     public List<string> items = new List<string>();
 
+    public GameManager gameManager;
+
     public void itemAdd(string item)
     {
         items.Add(item);
@@ -18,7 +20,7 @@ public class Inventory : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        gameManager = FindAnyObjectByType<GameManager>();
     }
 
     // Update is called once per frame

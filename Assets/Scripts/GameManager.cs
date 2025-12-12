@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public enum GameState { GAMEPLAY, PAUSE};
+    public enum GameState { GAMEPLAY, PAUSE };
     public GameState state;
     public bool hasChangedState;
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
                 state = GameState.PAUSE;
             }
         }
-        else if(state == GameState.PAUSE)
+        else if (state == GameState.PAUSE)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
