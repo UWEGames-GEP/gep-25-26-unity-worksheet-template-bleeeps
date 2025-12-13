@@ -14,12 +14,12 @@ public class PlayerCharacterController : ThirdPersonController
         }
     }
 
-    //private void OnRemoveItem(InputValue value)
-    //{
-        //if (value.isPressed)
-        //{
-            //Debug.Log("Remove Item");
-            //GetComponent<Inventory>().RemoveItemFromInventory();
-        //}
-    //}
+    private void OnRemoveItem(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            Debug.Log("Remove Item");
+            GetComponent<Inventory>().itemRemove();
+        }
+    }
 }

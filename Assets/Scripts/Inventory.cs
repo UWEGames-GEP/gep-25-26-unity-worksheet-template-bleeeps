@@ -3,18 +3,42 @@ using System.Collections.Generic;
 
 public class Inventory : MonoBehaviour
 {
-    public List<string> items = new List<string>();
+    public List<ItemObject> items = new List<ItemObject>();
 
     public GameManager gameManager;
+    Transform worldItemsTransform;
 
-    public void itemAdd(string item)
+    public void itemAdd(ItemObject item)
     {
         items.Add(item);
     }
 
-    public void itemRemove(string item)
+    public void itemRemove(ItemObject item)
     {
         items.Remove(item);
+    }
+
+    public void itemRemove()
+    {
+        if(gameManager.state == GameManager.GameState.GAMEPLAY && items.Count > 0)
+        {
+            ItemObject item = items[0];
+
+            Vector3 currentPosition = worldItemsTransform.position;
+            Vector3 forward = worldItemsTransform.forward;
+
+            Vector3 newPosition = currentPosition + forward;
+            newPosition += new Vector3(0, 1, 0);
+
+            Quaternion currentRotation = worldItemsTransform.rotation;
+            Quaternion newRotation = currentRotation * Quaternion.Euler(0, 0, 100);
+
+            GameObject newItem = Instantiate(item.gameObject, newPosition, newRotation, worldItemsTransform);
+            newItem.SetActive(true);
+
+            items.Remove(item);
+            Destroy(item.gameObject);
+        }
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
@@ -23,8 +47,8 @@ public class Inventory : MonoBehaviour
 
         if (collisionItem != null)
         {
-            items.Add(collisionItem.name);
-            Destroy(collisionItem.gameObject);
+            items.Add(collisionItem);
+            collisionItem.gameObject.SetActive(false);
         }
     }
 
@@ -32,6 +56,8 @@ public class Inventory : MonoBehaviour
     void Start()
     {
         gameManager = FindAnyObjectByType<GameManager>();
+
+        Transform worldItemsTransform = GameObject.Find("WorldItems").transform;
     }
 
     // Update is called once per frame
