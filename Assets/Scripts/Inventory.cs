@@ -17,6 +17,18 @@ public class Inventory : MonoBehaviour
         items.Remove(item);
     }
 
+    public void OnControllerColliderHit()
+    {
+        ItemObject collisionItem = hit.gameObject.GetComponent<ItemObject>();
+
+        if (collisionItem != null)
+        {
+            items.Add(collisionItem.name);
+        }
+
+        Destroy(collisionItem.name);
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
