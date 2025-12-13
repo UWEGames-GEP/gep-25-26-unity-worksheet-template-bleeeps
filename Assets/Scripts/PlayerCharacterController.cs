@@ -6,7 +6,7 @@ public class PlayerCharacterController : ThirdPersonController
 {
     public GameManager gameManager;
 
-    private void OnPause(InputValue value)
+    public void OnPause(InputValue value)
     {
         if (value.isPressed)
         {
@@ -22,16 +22,4 @@ public class PlayerCharacterController : ThirdPersonController
             //GetComponent<Inventory>().RemoveItemFromInventory();
         //}
     //}
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
