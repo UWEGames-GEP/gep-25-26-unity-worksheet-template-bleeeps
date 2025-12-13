@@ -1,9 +1,15 @@
 using UnityEngine;
+using TMPro;
+using System.Collections.Generic;
 
-public class ItemObject : MonoBehaviour
+public class PressableButtons : MonoBehaviour
 {
-    public string itemName;
-    public GameObject itemObject;
+    public TMP_Text text;
+
+    public void SetButton(ItemObject item)
+    {
+        text.text = item.itemName;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

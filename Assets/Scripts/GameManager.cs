@@ -1,10 +1,12 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
     public enum GameState { GAMEPLAY, PAUSE };
     public GameState state;
     public bool hasChangedState;
+    public GameObject inventoryUi;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -53,12 +55,17 @@ public class GameManager : MonoBehaviour
         if (state == GameState.GAMEPLAY)
         {
            hasChangedState = true;
-           state = GameState.PAUSE;     
+           state = GameState.PAUSE;
+           inventoryUi.SetActive(true);
+           Cursor.lockState = CursorLockMode.None;
+
         }
         else if (state == GameState.PAUSE)
         {
            hasChangedState = true;
            state = GameState.GAMEPLAY;
+           inventoryUi.SetActive(false);
+           Cursor.lockState = CursorLockMode.Locked;
         }
     }
 }

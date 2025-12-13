@@ -5,7 +5,7 @@ public class Inventory : MonoBehaviour
 {
     public List<ItemObject> items = new List<ItemObject>();
 
-    public GameManager gameManager;
+    GameManager gameManager;
     Transform worldItemsTransform;
 
     public void itemAdd(ItemObject item)
@@ -15,7 +15,20 @@ public class Inventory : MonoBehaviour
 
     public void itemRemove(ItemObject item)
     {
-        items.Remove(item);
+       Vector3 currentPosition = worldItemsTransform.position;
+       Vector3 forward = worldItemsTransform.forward;
+
+       Vector3 newPosition = currentPosition + forward;
+       newPosition += new Vector3(0, 1, 0);
+
+       Quaternion currentRotation = worldItemsTransform.rotation;
+       Quaternion newRotation = currentRotation * Quaternion.Euler(0, 0, 100);
+
+       GameObject newItem = Instantiate(item.gameObject, newPosition, newRotation, worldItemsTransform);
+       newItem.SetActive(true);
+
+       items.Remove(item);
+        Destroy(item.gameObject);
     }
 
     public void itemRemove()
@@ -24,20 +37,15 @@ public class Inventory : MonoBehaviour
         {
             ItemObject item = items[0];
 
-            Vector3 currentPosition = worldItemsTransform.position;
-            Vector3 forward = worldItemsTransform.forward;
+            itemRemove(item);
+        }
+    }
 
-            Vector3 newPosition = currentPosition + forward;
-            newPosition += new Vector3(0, 1, 0);
-
-            Quaternion currentRotation = worldItemsTransform.rotation;
-            Quaternion newRotation = currentRotation * Quaternion.Euler(0, 0, 100);
-
-            GameObject newItem = Instantiate(item.gameObject, newPosition, newRotation, worldItemsTransform);
-            newItem.SetActive(true);
-
-            items.Remove(item);
-            Destroy(item.gameObject);
+    public void itemRemove(int i)
+    {
+        if(i < items.Count)
+        {
+            itemRemove(items[i]);
         }
     }
 
@@ -57,7 +65,7 @@ public class Inventory : MonoBehaviour
     {
         gameManager = FindAnyObjectByType<GameManager>();
 
-        Transform worldItemsTransform = GameObject.Find("WorldItems").transform;
+        worldItemsTransform = GameObject.Find("ItemParent").transform;
     }
 
     // Update is called once per frame
