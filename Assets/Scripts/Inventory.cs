@@ -19,7 +19,7 @@ public class Inventory : MonoBehaviour
 
     public void OnControllerColliderHit()
     {
-        ItemObject collisionItem = hit.gameObject.GetComponent<ItemObject>();
+        ItemObject collisionItem = OnControllerColliderHit().gameObject.GetComponent<ItemObject>();
 
         if (collisionItem != null)
         {
